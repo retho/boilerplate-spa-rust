@@ -1,21 +1,22 @@
 use yew::prelude::*;
+use yew_router::prelude::*;
+
+mod router {
+  pub mod routes;
+}
+mod pages;
+
+use crate::router::routes::*;
 
 #[function_component(App)]
-fn hello_world() -> Html {
-    let counter = use_state(|| 0);
-    let onclick = {
-        let counter = counter.clone();
-        Callback::from(move |_| counter.set(*counter + 1))
-    };
-
-    html! {
-        <div>
-            <button {onclick}>{ "+1" }</button>
-            <p>{ *counter }</p>
-        </div>
-    }
+fn app() -> Html {
+  html! {
+    <BrowserRouter>
+      <Switch<Route> render={Switch::render(pages::switch)} />
+    </BrowserRouter>
+  }
 }
 
 fn main() {
-    yew::start_app::<App>();
+  yew::start_app::<App>();
 }
